@@ -38,6 +38,7 @@ class App extends Component {
           authenticated: true,
           loading: false
         });
+        
       } 
        else {
          this.setState({

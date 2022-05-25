@@ -1,10 +1,10 @@
-import React, { Component,  } from "react";
-import { Link,Routes,Route,Navigate} from "react-router-dom";
+import React,{ Component} from "react";
+import { Link} from "react-router-dom";
 import {auth} from "../services/firebase";
 import { signin, signInWithGoogle, signInWithGitHub } from "../helpers/auth";
 
 function landingPage(){
-  return window.history.pushState(window.localStorage,'http://localhost:3000/login');
+  return window.location.href = 'http://localhost:3000/chat/'
 }
 
 export default class Login extends Component {
@@ -35,6 +35,9 @@ export default class Login extends Component {
     } catch (error) {
       this.setState({ error: error.message });
     }
+    if(auth.currentUser){
+      landingPage();
+    }
   }
 
   async googleSignIn() {
@@ -43,6 +46,7 @@ export default class Login extends Component {
     } catch (error) {
       this.setState({ error: error.message });
     }
+
     if(auth.currentUser){
       landingPage();
     }
@@ -54,7 +58,9 @@ export default class Login extends Component {
     } catch (error) {
       this.setState({ error: error.message });
     }
-   
+   if(auth.currentUser){
+     landingPage();
+   }
   }
 
   render() {
@@ -101,12 +107,8 @@ export default class Login extends Component {
             <button className="btn btn-primary px-5" type="submit">Login</button>
           </div>
           <p>You can also log in with any of these services</p>
-          {/* <button className="btn btn-danger mr-2" type="button" onClick={this.googleSignIn}>
-            Sign in with Google
-          </button> */}
            <button className="btn btn-danger mr-2" type="button" onClick={()=>{
              this.googleSignIn();
-             
            }}>
             Sign in with Google
           </button>
