@@ -4,7 +4,7 @@ import {auth} from "../services/firebase";
 import { signin, signInWithGoogle, signInWithGitHub } from "../helpers/auth";
 
 function landingPage(){
-  return window.location.href = 'https://adorable-jalebi-6ad3f0.netlify.app/chat'
+  return window.location.href = 'https://mychatisgood.netlify.app/chat'
 }
 
 export default class Login extends Component {
