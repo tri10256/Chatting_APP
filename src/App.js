@@ -61,8 +61,9 @@ class App extends Component {
             <Route exact path="/" element={<Home/>}></Route>
             <Route exact path="/signup" element={<Signup/>}></Route>
             <Route exact path="/login" element={<Login/>}></Route>
+            <Route exact path="/chat" element={<Chat/>}></Route>
            
-            <Route  path = "/chat" element = { <PrivateRoute authenticated = {this.state.authenticated} component = {<Chat/>}/>}/>
+//             <Route  path = "/chat" element = { <PrivateRoute authenticated = {this.state.authenticated} component = {<Chat/>}/>}/>
            
           </Routes>
         </Router>
