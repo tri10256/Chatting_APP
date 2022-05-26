@@ -1,13 +1,17 @@
 import React,{ Component} from "react";
-import { Link} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import {auth} from "../services/firebase";
 import { signin, signInWithGoogle, signInWithGitHub } from "../helpers/auth";
 
-function landingPage(){
-  return window.location.href = 'http://localhost:3000/chat/'
+function landingPage({nav}){
+  nav('/chat');
 }
-
-export default class Login extends Component {
+//wrap the class component in a function  and pass the constant as the props and use it
+export default function Login(props){
+   const nav = useNavigate();
+   return <Helper {...props} nav ={nav}/>;
+}
+class Helper extends Component {
   constructor() {
     super();
     this.state = {
@@ -27,7 +31,7 @@ export default class Login extends Component {
     });
   }
 
-  async handleSubmit(event) {
+  async handleSubmit(event,nav) {
     event.preventDefault();
     this.setState({ error: "" });
     try {
@@ -36,11 +40,11 @@ export default class Login extends Component {
       this.setState({ error: error.message });
     }
     if(auth.currentUser){
-      landingPage();
+      landingPage(this.props);
     }
   }
 
-  async googleSignIn() {
+  async googleSignIn(nav) {
     try {
       await signInWithGoogle();
     } catch (error) {
@@ -48,18 +52,18 @@ export default class Login extends Component {
     }
 
     if(auth.currentUser){
-      landingPage();
+        landingPage(nav);
     }
   }
 
-  async githubSignIn() {
+  async githubSignIn(nav) {
     try {
       await signInWithGitHub();
     } catch (error) {
       this.setState({ error: error.message });
     }
    if(auth.currentUser){
-     landingPage();
+      landingPage(nav);
    }
   }
 
@@ -108,11 +112,15 @@ export default class Login extends Component {
           </div>
           <p>You can also log in with any of these services</p>
            <button className="btn btn-danger mr-2" type="button" onClick={()=>{
-             this.googleSignIn();
+             let {nav} = this.props;
+             this.googleSignIn(nav = {nav});
            }}>
             Sign in with Google
           </button>
-          <button className="btn btn-secondary" type="button" onClick={this.githubSignIn}>
+          <button className="btn btn-secondary" type="button" onClick={()=>{
+            let {nav} = this.props;
+            this.githubSignIn(nav);
+            }}>
             Sign in with GitHub
           </button>
           <hr />
